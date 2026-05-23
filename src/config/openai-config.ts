@@ -10,7 +10,6 @@
 //   return config;
 // };
 import OpenAI from "openai";
-console.log("KEY:", process.env.GOOGLE_API_KEY);
 
 export const configureOpenAI = () => {
   return new OpenAI({
