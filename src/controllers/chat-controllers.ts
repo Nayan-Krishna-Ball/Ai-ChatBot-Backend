@@ -61,7 +61,6 @@ export const generateChatCompletion = async (
     // user.chats.push(chatResponse.data.choices[0].message);
 
     //trying gemeni api
-    console.log(`request message`, message);
 
     const ai = new GoogleGenAI({
       apiKey: process.env.GOOGLE_API_KEY,
@@ -71,8 +70,6 @@ export const generateChatCompletion = async (
       model: "gemini-3.5-flash",
       contents: message,
     });
-
-    console.log(`response.text: ${response.text}`);
 
     const assistantReply = response.text || "No response";
 
