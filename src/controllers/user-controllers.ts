@@ -37,22 +37,45 @@ export const userSignup = async (
     await user.save();
 
     // create token and store cookie
+
+    // ❌ OLD CODE (localhost only - does not work in production)
+    // res.clearCookie(COOKIE_NAME, {
+    //   httpOnly: true,
+    //   domain: "localhost",
+    //   signed: true,
+    //   path: "/",
+    // });
+
+    // ✅ NEW CODE (production-safe for Render + Vercel)
     res.clearCookie(COOKIE_NAME, {
       httpOnly: true,
-      domain: "localhost",
       signed: true,
       path: "/",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     });
 
     const token = createToken(user._id.toString(), user.email, "7d");
     const expires = new Date();
     expires.setDate(expires.getDate() + 7);
+
+    // ❌ OLD CODE (localhost only - does not work in production)
+    // res.cookie(COOKIE_NAME, token, {
+    //   path: "/",
+    //   domain: "localhost",
+    //   expires,
+    //   httpOnly: true,
+    //   signed: true,
+    // });
+
+    // ✅ NEW CODE (production-safe for Render + Vercel)
     res.cookie(COOKIE_NAME, token, {
       path: "/",
-      domain: "localhost",
       expires,
       httpOnly: true,
       signed: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     });
 
     return res
@@ -83,22 +106,44 @@ export const userLogin = async (
 
     // create token and store cookie
 
+    // ❌ OLD CODE (localhost only - does not work in production)
+    // res.clearCookie(COOKIE_NAME, {
+    //   httpOnly: true,
+    //   domain: "localhost",
+    //   signed: true,
+    //   path: "/",
+    // });
+
+    // ✅ NEW CODE (production-safe for Render + Vercel)
     res.clearCookie(COOKIE_NAME, {
       httpOnly: true,
-      domain: "localhost",
       signed: true,
       path: "/",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     });
 
     const token = createToken(user._id.toString(), user.email, "7d");
     const expires = new Date();
     expires.setDate(expires.getDate() + 7);
+
+    // ❌ OLD CODE (localhost only - does not work in production)
+    // res.cookie(COOKIE_NAME, token, {
+    //   path: "/",
+    //   domain: "localhost",
+    //   expires,
+    //   httpOnly: true,
+    //   signed: true,
+    // });
+
+    // ✅ NEW CODE (production-safe for Render + Vercel)
     res.cookie(COOKIE_NAME, token, {
       path: "/",
-      domain: "localhost",
       expires,
       httpOnly: true,
       signed: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     });
 
     return res.status(200).json({
@@ -151,11 +196,21 @@ export const userLogout = async (
       return res.status(401).send("Permissions didn't match");
     }
 
+    // ❌ OLD CODE (localhost only - does not work in production)
+    // res.clearCookie(COOKIE_NAME, {
+    //   httpOnly: true,
+    //   domain: "localhost",
+    //   signed: true,
+    //   path: "/",
+    // });
+
+    // ✅ NEW CODE (production-safe for Render + Vercel)
     res.clearCookie(COOKIE_NAME, {
       httpOnly: true,
-      domain: "localhost",
       signed: true,
       path: "/",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     });
 
     return res

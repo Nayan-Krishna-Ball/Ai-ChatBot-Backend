@@ -12,7 +12,13 @@ dotenv.config();
 const app = express();
 
 //middlewares
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+
+// ❌ OLD CODE (localhost only - does not work in production)
+// app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+
+// ✅ NEW CODE (production-safe for Render + Vercel)
+// Render dashboard-এ FRONTEND_URL = your Vercel URL দিতে হবে
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
